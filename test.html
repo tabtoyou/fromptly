@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fromptly Test Page</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 40px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 32px;
+    }
+
+    .test-section {
+      margin-bottom: 32px;
+      padding: 24px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+
+    .test-section h2 {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 16px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+      resize: vertical;
+      transition: border-color 0.2s;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border-color 0.2s;
+      margin-top: 12px;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    [contenteditable="true"] {
+      min-height: 100px;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      background: white;
+    }
+
+    [contenteditable="true"]:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .examples {
+      background: #e8f5e9;
+      border-left: 3px solid #4caf50;
+      padding: 16px;
+      border-radius: 4px;
+      margin-top: 16px;
+    }
+
+    .examples h3 {
+      font-size: 14px;
+      color: #2e7d32;
+      margin-bottom: 8px;
+    }
+
+    .examples ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .examples li {
+      padding: 4px 0;
+      color: #1b5e20;
+      font-size: 13px;
+    }
+
+    .examples code {
+      background: rgba(255, 255, 255, 0.5);
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .status {
+      background: #fff3cd;
+      border-left: 3px solid #ff9800;
+      padding: 16px;
+      border-radius: 4px;
+      margin-bottom: 24px;
+    }
+
+    .status strong {
+      color: #e65100;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🪶 Fromptly 테스트 페이지</h1>
+    <p class="subtitle">이 페이지에서 Fromptly 확장 프로그램을 테스트해보세요</p>
+
+    <div class="status">
+      <strong>⚠️ 주의:</strong> Fromptly가 설치되고 활성화되어 있는지 확인하세요.
+      모호한 표현을 입력하면 약 800ms 후 주황색 밑줄이 표시됩니다.
+    </div>
+
+    <div class="test-section">
+      <h2>테스트 1: Textarea</h2>
+      <p style="color: #666; font-size: 13px; margin-bottom: 12px;">
+        아래 textarea에 모호한 표현을 입력해보세요
+      </p>
+      <textarea placeholder="예: Make it pop, cleaner, more balanced, 깔끔하게..."></textarea>
+    </div>
+
+    <div class="test-section">
+      <h2>테스트 2: Input Field</h2>
+      <p style="color: #666; font-size: 13px; margin-bottom: 12px;">
+        아래 input 필드에 모호한 표현을 입력해보세요
+      </p>
+      <input type="text" placeholder="예: modern, professional, better...">
+    </div>
+
+    <div class="test-section">
+      <h2>테스트 3: ContentEditable</h2>
+      <p style="color: #666; font-size: 13px; margin-bottom: 12px;">
+        아래 편집 가능한 영역에 모호한 표현을 입력해보세요
+      </p>
+      <div contenteditable="true">여기에 입력하세요: make it nicer, add more space...</div>
+    </div>
+
+    <div class="examples">
+      <h3>📝 테스트할 모호한 표현들:</h3>
+      <ul>
+        <li>✓ <code>make it pop</code> - 시각적 강조 요청</li>
+        <li>✓ <code>cleaner</code> - 단순화 요청</li>
+        <li>✓ <code>more balanced</code> - 레이아웃 조정</li>
+        <li>✓ <code>modern</code> - 스타일 변경</li>
+        <li>✓ <code>better</code> - 모호한 개선 요청</li>
+        <li>✓ <code>깔끔하게</code> - 한국어 모호 표현</li>
+        <li>✓ <code>bigger</code> - 크기 조정</li>
+        <li>✓ <code>more space</code> - 간격 조정</li>
+        <li>✓ <code>looks weird</code> - 문제 설명</li>
+        <li>✓ <code>more contrast</code> - 접근성 요청</li>
+      </ul>
+    </div>
+
+    <div class="examples" style="background: #e3f2fd; border-left-color: #1976d2; margin-top: 16px;">
+      <h3 style="color: #0d47a1;">🔍 디버깅 방법:</h3>
+      <ul style="color: #1565c0;">
+        <li>1. F12를 눌러 개발자 도구를 엽니다</li>
+        <li>2. Console 탭을 확인합니다</li>
+        <li>3. "Fromptly: Extension active" 메시지를 찾습니다</li>
+        <li>4. 에러 메시지가 있는지 확인합니다</li>
+        <li>5. 입력 후 800ms 정도 기다립니다 (디바운스)</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // 페이지 로드 시 확장 프로그램 상태 확인
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        console.log('📋 Fromptly Test Page loaded');
+        console.log('✓ Testing editable elements detection...');
+
+        // 모든 입력 필드 확인
+        const textareas = document.querySelectorAll('textarea');
+        const inputs = document.querySelectorAll('input[type="text"]');
+        const editables = document.querySelectorAll('[contenteditable="true"]');
+
+        console.log(`Found ${textareas.length} textareas`);
+        console.log(`Found ${inputs.length} text inputs`);
+        console.log(`Found ${editables.length} contenteditable elements`);
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

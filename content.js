@@ -9,11 +9,17 @@ let isEnabled = true;
 // Load vague phrases dictionary
 async function loadVaguePhrases() {
   try {
-    const response = await fetch(chrome.runtime.getURL('vague-phrases.json'));
+    const url = chrome.runtime.getURL('vague-phrases.json');
+    console.log('Fromptly: Loading vague phrases from', url);
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
     const data = await response.json();
     vaguePhrases = data.vaguePhrases;
+    console.log(`Fromptly: Loaded ${vaguePhrases.length} vague phrase patterns`);
   } catch (error) {
-    console.error('Failed to load vague phrases:', error);
+    console.error('Fromptly: Failed to load vague phrases:', error);
   }
 }
 
@@ -22,8 +28,12 @@ async function checkDomainEnabled() {
   const settings = await chrome.storage.sync.get(['enabledDomains', 'isActive']);
   const currentDomain = window.location.hostname;
 
+  console.log('Fromptly: Current domain:', currentDomain);
+  console.log('Fromptly: Extension active:', settings.isActive !== false);
+
   if (settings.isActive === false) {
     isEnabled = false;
+    console.log('Fromptly: Extension is disabled in settings');
     return;
   }
 
@@ -35,7 +45,14 @@ async function checkDomainEnabled() {
     'github.com'
   ];
 
-  isEnabled = enabledDomains.some(domain => currentDomain.includes(domain));
+  // Enable for local files (test.html, file://) and localhost
+  const isLocalFile = !currentDomain || currentDomain === '' || currentDomain === 'localhost' || window.location.protocol === 'file:';
+
+  isEnabled = isLocalFile || enabledDomains.some(domain => currentDomain.includes(domain));
+
+  console.log('Fromptly: Enabled domains:', enabledDomains);
+  console.log('Fromptly: Is local file:', isLocalFile);
+  console.log('Fromptly: Extension enabled for this domain:', isEnabled);
 }
 
 // Detect vague phrases in text
@@ -230,17 +247,29 @@ async function requestLLMFeedback(match, element) {
 
 // Scan and highlight text in element
 function scanAndHighlight(element) {
-  if (!isEnabled) return;
+  if (!isEnabled) {
+    console.log('Fromptly: Extension not enabled, skipping scan');
+    return;
+  }
 
   const text = element.value || element.textContent;
   if (!text) return;
 
+  console.log('Fromptly: Scanning text:', text.substring(0, 50) + '...');
+
   const matches = detectVaguePhrases(text);
+
+  console.log(`Fromptly: Found ${matches.length} vague phrases`);
 
   if (matches.length === 0) {
     clearHighlights();
     return;
   }
+
+  // Log the matches
+  matches.forEach((match, idx) => {
+    console.log(`Fromptly: Match ${idx + 1}: "${match.text}" (${match.category})`);
+  });
 
   // For contentEditable elements, we need to handle differently
   if (element.contentEditable === 'true') {
@@ -345,9 +374,13 @@ function monitorEditableElements() {
 
   const elements = document.querySelectorAll(editableSelectors.join(','));
 
-  elements.forEach(element => {
+  console.log(`Fromptly: Found ${elements.length} editable elements`);
+
+  elements.forEach((element, idx) => {
     // Skip if already monitored
     if (element.hasAttribute('data-fromptly-monitored')) return;
+
+    console.log(`Fromptly: Monitoring element ${idx + 1}:`, element.tagName, element.type || 'contenteditable');
 
     element.setAttribute('data-fromptly-monitored', 'true');
 
