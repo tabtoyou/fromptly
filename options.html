@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fromptly Settings</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 32px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 32px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .header p {
+      opacity: 0.9;
+      font-size: 16px;
+    }
+
+    .content {
+      padding: 32px;
+    }
+
+    .section {
+      margin-bottom: 32px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .section:last-child {
+      border-bottom: none;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #333;
+    }
+
+    .section-description {
+      color: #666;
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .help-text {
+      font-size: 13px;
+      color: #666;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    .help-text a {
+      color: #667eea;
+      text-decoration: none;
+    }
+
+    .help-text a:hover {
+      text-decoration: underline;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .domain-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .domain-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px;
+      background: #f5f5f5;
+      border-radius: 6px;
+    }
+
+    .domain-item input[type="checkbox"] {
+      margin: 0;
+    }
+
+    .domain-item label {
+      margin: 0;
+      font-weight: 400;
+      cursor: pointer;
+      flex: 1;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: #667eea;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #5568d3;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+      background: #e0e0e0;
+      color: #333;
+      margin-left: 8px;
+    }
+
+    .btn-secondary:hover {
+      background: #d5d5d5;
+    }
+
+    .status-message {
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin-top: 16px;
+      display: none;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .status-message.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .status-message.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 26px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 26px;
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .toggle-slider {
+      background-color: #667eea;
+    }
+
+    input:checked + .toggle-slider:before {
+      transform: translateX(24px);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🪶 Fromptly Settings</h1>
+      <p>Configure your real-time prompt coach</p>
+    </div>
+
+    <div class="content">
+      <!-- Extension Status -->
+      <div class="section">
+        <div class="section-title">Extension Status</div>
+        <div class="checkbox-group">
+          <label class="toggle-switch">
+            <input type="checkbox" id="extensionActive">
+            <span class="toggle-slider"></span>
+          </label>
+          <label for="extensionActive" style="cursor: pointer;">Enable Fromptly</label>
+        </div>
+      </div>
+
+      <!-- API Configuration -->
+      <div class="section">
+        <div class="section-title">API Configuration</div>
+        <div class="section-description">
+          Fromptly uses AI to provide context-aware suggestions. Enter your OpenAI API key to enable LLM-powered feedback.
+        </div>
+
+        <div class="form-group">
+          <label for="apiKey">OpenAI API Key</label>
+          <input type="password" id="apiKey" placeholder="sk-...">
+          <div class="help-text">
+            Get your API key from <a href="https://platform.openai.com/api-keys" target="_blank">OpenAI Platform</a>. Your key is stored locally and never shared.
+          </div>
+        </div>
+      </div>
+
+      <!-- Enabled Domains -->
+      <div class="section">
+        <div class="section-title">Enabled Domains</div>
+        <div class="section-description">
+          Choose which websites Fromptly should be active on. Only checked domains will have prompt detection enabled.
+        </div>
+
+        <div class="domain-list">
+          <div class="domain-item">
+            <input type="checkbox" id="domain-lovable" value="lovable.dev">
+            <label for="domain-lovable">lovable.dev - AI IDE for building apps</label>
+          </div>
+          <div class="domain-item">
+            <input type="checkbox" id="domain-gemini" value="aistudio.google.com">
+            <label for="domain-gemini">aistudio.google.com - Google AI Studio</label>
+          </div>
+          <div class="domain-item">
+            <input type="checkbox" id="domain-notion" value="notion.so">
+            <label for="domain-notion">notion.so - Notion workspace</label>
+          </div>
+          <div class="domain-item">
+            <input type="checkbox" id="domain-jira" value="atlassian.net">
+            <label for="domain-jira">atlassian.net - Jira/Confluence</label>
+          </div>
+          <div class="domain-item">
+            <input type="checkbox" id="domain-github" value="github.com">
+            <label for="domain-github">github.com - GitHub</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Save Button -->
+      <div class="section">
+        <button class="btn btn-primary" id="saveBtn">Save Settings</button>
+        <button class="btn btn-secondary" id="resetBtn">Reset to Default</button>
+        <div class="status-message" id="statusMessage"></div>
+      </div>
+
+      <!-- About -->
+      <div class="section">
+        <div class="section-title">About Fromptly</div>
+        <div class="section-description">
+          <strong>Version:</strong> 1.0.0<br>
+          <strong>Purpose:</strong> Help you write clearer, design-aware prompts through real-time feedback<br>
+          <strong>Privacy:</strong> All text processing happens locally. API calls are only made when you have configured an API key, and prompts are never logged or stored.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

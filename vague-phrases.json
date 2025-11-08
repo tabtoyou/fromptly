@@ -1,0 +1,154 @@
+{
+  "vaguePhrases": [
+    {
+      "phrase": "make it pop",
+      "pattern": "make\\s+it\\s+pop",
+      "suggestions": [
+        "Increase contrast by 20%",
+        "Add box-shadow: 0 4px 12px rgba(0,0,0,0.15)",
+        "Increase font-weight to 600 or bold"
+      ],
+      "category": "visual-emphasis"
+    },
+    {
+      "phrase": "cleaner",
+      "pattern": "\\b(cleaner|clean\\s+it\\s+up)\\b",
+      "suggestions": [
+        "Reduce visual clutter: remove unnecessary borders",
+        "Increase whitespace: add padding of 16-24px",
+        "Simplify: use a single font weight"
+      ],
+      "category": "simplification"
+    },
+    {
+      "phrase": "more balanced",
+      "pattern": "\\b(more\\s+balanced|balance\\s+it|balanced)\\b",
+      "suggestions": [
+        "Use flexbox with justify-content: space-between",
+        "Apply equal margins: margin: 16px on all sides",
+        "Center align with align-items: center"
+      ],
+      "category": "layout"
+    },
+    {
+      "phrase": "modern",
+      "pattern": "\\b(modern|modernize|more\\s+modern)\\b",
+      "suggestions": [
+        "Use rounded corners: border-radius: 8-12px",
+        "Apply subtle shadows: box-shadow: 0 2px 8px rgba(0,0,0,0.1)",
+        "Use sans-serif font like Inter or SF Pro"
+      ],
+      "category": "style"
+    },
+    {
+      "phrase": "professional",
+      "pattern": "\\b(professional|more\\s+professional)\\b",
+      "suggestions": [
+        "Use neutral color palette: grays and blues",
+        "Maintain consistent spacing: 8px grid system",
+        "Apply subtle, minimal design patterns"
+      ],
+      "category": "tone"
+    },
+    {
+      "phrase": "better",
+      "pattern": "\\b(better|improve\\s+it)\\b",
+      "suggestions": [
+        "Be specific: what aspect needs improvement?",
+        "Define metrics: faster load time, higher contrast, etc.",
+        "Specify the goal: accessibility, performance, or aesthetics?"
+      ],
+      "category": "ambiguous"
+    },
+    {
+      "phrase": "nicer",
+      "pattern": "\\b(nicer|look\\s+nicer)\\b",
+      "suggestions": [
+        "Improve visual hierarchy with font sizes (16/20/24px)",
+        "Add subtle animations: transition: all 0.2s ease",
+        "Polish with consistent border-radius: 8px"
+      ],
+      "category": "aesthetics"
+    },
+    {
+      "phrase": "깔끔하게",
+      "pattern": "깔끔하게|깔끔한",
+      "suggestions": [
+        "여백 늘리기: padding 16-24px 적용",
+        "불필요한 테두리 제거",
+        "단일 폰트 굵기 사용하여 단순화"
+      ],
+      "category": "simplification"
+    },
+    {
+      "phrase": "more space",
+      "pattern": "\\b(more\\s+space|add\\s+space|spacious)\\b",
+      "suggestions": [
+        "Increase padding: padding: 20px 24px",
+        "Add margin between elements: gap: 16px in flexbox",
+        "Increase line-height: 1.6 for better readability"
+      ],
+      "category": "spacing"
+    },
+    {
+      "phrase": "bigger",
+      "pattern": "\\b(bigger|larger|make\\s+it\\s+big)\\b",
+      "suggestions": [
+        "Increase font-size: from 16px to 20px",
+        "Scale element: transform: scale(1.2)",
+        "Increase width/height by specific pixels or percentage"
+      ],
+      "category": "sizing"
+    },
+    {
+      "phrase": "smaller",
+      "pattern": "\\b(smaller|reduce\\s+size)\\b",
+      "suggestions": [
+        "Decrease font-size: from 16px to 14px",
+        "Scale down: transform: scale(0.9)",
+        "Reduce padding: from 16px to 12px"
+      ],
+      "category": "sizing"
+    },
+    {
+      "phrase": "fix it",
+      "pattern": "\\b(fix\\s+it|fix\\s+this)\\b",
+      "suggestions": [
+        "Specify what's broken: layout, color, spacing?",
+        "Describe expected behavior or appearance",
+        "Reference specific element or property"
+      ],
+      "category": "ambiguous"
+    },
+    {
+      "phrase": "looks weird",
+      "pattern": "\\b(looks\\s+weird|seems\\s+off|something\\s+wrong)\\b",
+      "suggestions": [
+        "Identify the specific issue: alignment, color, size?",
+        "Compare to expected state or design",
+        "Describe visual inconsistency precisely"
+      ],
+      "category": "ambiguous"
+    },
+    {
+      "phrase": "more contrast",
+      "pattern": "\\b(more\\s+contrast|higher\\s+contrast|contrast)\\b",
+      "suggestions": [
+        "Darken text: use color: #1a1a1a instead of #666",
+        "Lighten background: use #ffffff instead of #f5f5f5",
+        "Meet WCAG AA: ensure contrast ratio ≥ 4.5:1"
+      ],
+      "category": "accessibility"
+    },
+    {
+      "phrase": "responsive",
+      "pattern": "\\b(make\\s+it\\s+responsive|more\\s+responsive)\\b",
+      "suggestions": [
+        "Add media queries: @media (max-width: 768px)",
+        "Use flexible units: width: 100% or max-width: 1200px",
+        "Apply flex or grid layout for adaptability"
+      ],
+      "category": "layout"
+    }
+  ]
+}
