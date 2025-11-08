@@ -12,7 +12,9 @@ async function updateStatus() {
   // Get settings
   const settings = await chrome.storage.sync.get([
     'isActive',
+    'geminiApiKey',
     'openaiApiKey',
+    'llmProvider',
     'enabledDomains'
   ]);
 
@@ -43,9 +45,13 @@ async function updateStatus() {
 
   document.getElementById('domainStatus').textContent = isDomainEnabled ? 'Yes ✓' : 'No ✗';
 
-  // Check API key
-  const hasApiKey = settings.openaiApiKey && settings.openaiApiKey.length > 0;
-  document.getElementById('apiStatus').textContent = hasApiKey ? 'Configured ✓' : 'Not set ✗';
+  // Check API key based on provider
+  const provider = settings.llmProvider || 'gemini';
+  const apiKey = provider === 'gemini' ? settings.geminiApiKey : settings.openaiApiKey;
+  const hasApiKey = apiKey && apiKey.length > 0;
+  const providerName = provider === 'gemini' ? 'Gemini' : 'OpenAI';
+
+  document.getElementById('apiStatus').textContent = hasApiKey ? `${providerName} ✓` : 'Not set ✗';
 }
 
 // Toggle extension

@@ -29,9 +29,12 @@ async function getLLMFeedback(data) {
   }
 
   // Get API key from storage
-  const settings = await chrome.storage.sync.get(['openaiApiKey', 'llmProvider', 'customApiKey']);
+  const settings = await chrome.storage.sync.get(['openaiApiKey', 'geminiApiKey', 'llmProvider']);
 
-  if (!settings.openaiApiKey && !settings.customApiKey) {
+  const provider = settings.llmProvider || 'gemini';
+  const apiKey = provider === 'gemini' ? settings.geminiApiKey : settings.openaiApiKey;
+
+  if (!apiKey) {
     console.log('No API key configured - skipping LLM feedback');
     return { suggestions: [] };
   }
@@ -52,10 +55,10 @@ async function getLLMFeedback(data) {
   }
 }
 
-// Call LLM API (OpenAI GPT-4o-mini)
+// Call LLM API (Gemini or OpenAI)
 async function callLLM(phrase, context, category, settings) {
-  const apiKey = settings.openaiApiKey || settings.customApiKey;
-  const provider = settings.llmProvider || 'openai';
+  const provider = settings.llmProvider || 'gemini';
+  const apiKey = provider === 'gemini' ? settings.geminiApiKey : settings.openaiApiKey;
 
   const systemPrompt = `You are a design and UI language expert. Your job is to convert vague, ambiguous design prompts into precise, actionable suggestions using specific CSS properties, design tokens, or clear measurements.
 
@@ -77,7 +80,50 @@ Provide 2-3 precise, actionable alternatives to replace this vague phrase. Each 
 Return ONLY a JSON array of strings, like:
 ["suggestion 1", "suggestion 2", "suggestion 3"]`;
 
-  if (provider === 'openai') {
+  if (provider === 'gemini') {
+    // Gemini API
+    const fullPrompt = `${systemPrompt}\n\n${userPrompt}`;
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        contents: [{
+          parts: [{
+            text: fullPrompt
+          }]
+        }],
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 300,
+        }
+      })
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(`Gemini API error: ${error}`);
+    }
+
+    const data = await response.json();
+
+    if (!data.candidates || data.candidates.length === 0) {
+      throw new Error('Gemini API returned no candidates');
+    }
+
+    const content = data.candidates[0].content.parts[0].text.trim();
+
+    // Parse JSON array from response
+    try {
+      const suggestions = JSON.parse(content);
+      return Array.isArray(suggestions) ? suggestions : [];
+    } catch (e) {
+      // If not valid JSON, try to extract suggestions from text
+      return parseTextSuggestions(content);
+    }
+  } else if (provider === 'openai') {
+    // OpenAI API
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -145,7 +191,7 @@ chrome.runtime.onInstalled.addListener(async (details) => {
         'atlassian.net',
         'github.com'
       ],
-      llmProvider: 'openai'
+      llmProvider: 'gemini'
     });
 
     // Open options page on install

@@ -83,14 +83,29 @@ Once published, you'll be able to install directly from the Chrome Web Store.
 
 ### 1. Configure API Key (Optional but Recommended)
 
-Fromptly works offline with local detection, but for AI-powered suggestions, you need an OpenAI API key:
+Fromptly works offline with local detection, but for AI-powered suggestions, you need an API key.
 
+**Choose your AI provider:**
+
+#### Option A: Google Gemini (Default, Recommended)
 1. Click the Fromptly icon in your Chrome toolbar
 2. Click "Settings"
-3. Enter your OpenAI API key
-   - Get one from: https://platform.openai.com/api-keys
+3. Select "Google Gemini" as your AI provider
+4. Enter your Gemini API key
+   - Get a **free** API key from: https://aistudio.google.com/app/apikey
+   - Gemini offers generous free tier usage
    - Your key is stored locally and never shared
-4. Click "Save Settings"
+5. Click "Save Settings"
+
+#### Option B: OpenAI
+1. Click the Fromptly icon in your Chrome toolbar
+2. Click "Settings"
+3. Select "OpenAI" as your AI provider
+4. Enter your OpenAI API key
+   - Get one from: https://platform.openai.com/api-keys
+   - Requires paid account for GPT-4o-mini
+   - Your key is stored locally and never shared
+5. Click "Save Settings"
 
 ### 2. Enable Domains
 
@@ -168,7 +183,9 @@ Access via: Click extension icon → "Settings"
 
 Fromptly uses Chrome sync storage for settings:
 - `isActive` - Extension on/off state
-- `openaiApiKey` - Your API key (encrypted by Chrome)
+- `llmProvider` - Selected AI provider (gemini or openai)
+- `geminiApiKey` - Your Gemini API key (encrypted by Chrome)
+- `openaiApiKey` - Your OpenAI API key (encrypted by Chrome)
 - `enabledDomains` - List of active domains
 
 ## 🌐 Supported Platforms
@@ -190,25 +207,26 @@ Fromptly works on any site with text inputs, but is optimized for:
 
 - ❌ Log or store your prompts
 - ❌ Track your browsing activity
-- ❌ Send data to third-party servers (except OpenAI if configured)
+- ❌ Send data to third-party servers (except Gemini/OpenAI if configured)
 - ❌ Access your personal information
 - ❌ Inject ads or tracking scripts
 
 ### What Fromptly DOES
 
 - ✅ Process text locally using regex patterns
-- ✅ Optionally send vague phrases to OpenAI for suggestions
+- ✅ Optionally send vague phrases to Gemini or OpenAI for suggestions
 - ✅ Store settings in Chrome sync storage (encrypted)
 - ✅ Cache suggestions locally to reduce API calls
 - ✅ Require explicit domain permission
 
 ### API Usage
 
-When you configure an OpenAI API key:
-- Only detected vague phrases are sent to OpenAI
+When you configure an API key (Gemini or OpenAI):
+- Only detected vague phrases are sent to the AI provider
 - Requests are debounced (800ms delay)
 - Responses are cached for 15 minutes
 - You can disable LLM feedback by removing the API key
+- **Gemini offers a generous free tier** - great for getting started!
 
 ## 🧑‍💻 Development
 

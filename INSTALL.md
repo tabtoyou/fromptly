@@ -52,10 +52,20 @@ fromptly/
 
 1. **Click the Fromptly icon** in your Chrome toolbar
 2. **Click "Settings"** button
-3. **Enter your OpenAI API key** (optional)
+3. **Choose your AI provider and enter API key** (optional)
+
+   **Option A: Google Gemini (Recommended)**
+   - Select "Google Gemini" as provider
+   - Get a **FREE** API key from: https://aistudio.google.com/app/apikey
+   - Gemini has a generous free tier!
+
+   **Option B: OpenAI**
+   - Select "OpenAI" as provider
    - Get a key from: https://platform.openai.com/api-keys
-   - This enables AI-powered suggestions
-   - Local detection works without an API key
+   - Requires paid account
+
+   **Note:** Local detection works without an API key, but AI suggestions require one.
+
 4. **Configure domains** (default domains are already enabled):
    - lovable.dev
    - aistudio.google.com

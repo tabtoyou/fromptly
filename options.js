@@ -8,21 +8,53 @@ const domainCheckboxes = {
   'github.com': document.getElementById('domain-github')
 };
 
+// Toggle API key input based on provider selection
+function toggleApiKeyInput() {
+  const provider = document.querySelector('input[name="provider"]:checked')?.value;
+
+  const geminiGroup = document.getElementById('geminiKeyGroup');
+  const openaiGroup = document.getElementById('openaiKeyGroup');
+
+  if (provider === 'gemini') {
+    geminiGroup.style.display = 'block';
+    openaiGroup.style.display = 'none';
+  } else if (provider === 'openai') {
+    geminiGroup.style.display = 'none';
+    openaiGroup.style.display = 'block';
+  }
+}
+
 // Load saved settings
 async function loadSettings() {
   const settings = await chrome.storage.sync.get([
     'isActive',
+    'geminiApiKey',
     'openaiApiKey',
+    'llmProvider',
     'enabledDomains'
   ]);
 
   // Extension active status
   document.getElementById('extensionActive').checked = settings.isActive !== false;
 
-  // API key
-  if (settings.openaiApiKey) {
-    document.getElementById('apiKey').value = settings.openaiApiKey;
+  // Provider selection
+  const provider = settings.llmProvider || 'gemini';
+  if (provider === 'gemini') {
+    document.getElementById('providerGemini').checked = true;
+  } else {
+    document.getElementById('providerOpenAI').checked = true;
   }
+
+  // API keys
+  if (settings.geminiApiKey) {
+    document.getElementById('geminiApiKey').value = settings.geminiApiKey;
+  }
+  if (settings.openaiApiKey) {
+    document.getElementById('openaiApiKey').value = settings.openaiApiKey;
+  }
+
+  // Toggle input visibility
+  toggleApiKeyInput();
 
   // Enabled domains
   const enabledDomains = settings.enabledDomains || [
@@ -41,7 +73,9 @@ async function loadSettings() {
 // Save settings
 async function saveSettings() {
   const isActive = document.getElementById('extensionActive').checked;
-  const apiKey = document.getElementById('apiKey').value.trim();
+  const provider = document.querySelector('input[name="provider"]:checked')?.value || 'gemini';
+  const geminiApiKey = document.getElementById('geminiApiKey').value.trim();
+  const openaiApiKey = document.getElementById('openaiApiKey').value.trim();
 
   // Get enabled domains
   const enabledDomains = [];
@@ -54,7 +88,9 @@ async function saveSettings() {
   try {
     await chrome.storage.sync.set({
       isActive,
-      openaiApiKey: apiKey,
+      llmProvider: provider,
+      geminiApiKey: geminiApiKey,
+      openaiApiKey: openaiApiKey,
       enabledDomains
     });
 
@@ -85,6 +121,8 @@ async function resetSettings() {
   try {
     await chrome.storage.sync.set({
       isActive: true,
+      llmProvider: 'gemini',
+      geminiApiKey: '',
       openaiApiKey: '',
       enabledDomains: [
         'lovable.dev',
@@ -117,6 +155,11 @@ function showStatus(message, type) {
 // Event listeners
 document.getElementById('saveBtn').addEventListener('click', saveSettings);
 document.getElementById('resetBtn').addEventListener('click', resetSettings);
+
+// Provider radio button change
+document.querySelectorAll('input[name="provider"]').forEach(radio => {
+  radio.addEventListener('change', toggleApiKeyInput);
+});
 
 // Load settings when page loads
 document.addEventListener('DOMContentLoaded', loadSettings);
